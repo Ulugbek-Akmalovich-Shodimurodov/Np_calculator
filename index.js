@@ -1,3 +1,4 @@
+
 let nP_btn = document.querySelector('.btn_p');
 let PQ_btn = document.querySelector('.btn_p_q');
 
@@ -106,4 +107,39 @@ nP_btn.addEventListener('click', (e)=>{
         result_y.value = `Y= ${arrnResY[arrnResY.length-1]}`;
       }
 
-    })    
+    })   
+    
+    PQ_btn.addEventListener('click', (ev)=>{
+      ev.preventDefault();
+
+      let mod_p = document.querySelector('.mod_p').value * 1;
+      let a = document.querySelector('.a').value * 1;
+      let b = document.querySelector('.b').value * 1;
+      let point_p_x = document.querySelector('.point_P_x').value * 1;
+      let point_p_y = document.querySelector('.point_P_y').value * 1;
+      let point_q_x = document.querySelector('.point_Q_x').value * 1;
+      let point_q_y = document.querySelector('.point_Q_y').value * 1;
+      let n = document.querySelector('.n').value * 1;
+      let result_x = document.querySelector('.result_x');
+      let result_y = document.querySelector('.result_y');
+
+
+      let e = ((point_q_x - point_p_x)%mod_p + mod_p)%mod_p;
+      let r = ((point_q_y - point_p_y)%mod_p + mod_p)%mod_p;
+
+      let d = function (e, r){
+        for(let d = 0; d <= mod_p; d++) {
+          if ((e * d) % mod_p == r) 
+            return d;
+          }
+      }
+
+      let lyamda = d(e, r);
+      let x = ((Math.pow(lyamda, 2) - point_p_x - point_q_x)%mod_p + mod_p)%mod_p;
+
+      result_x.value = `X= ${x}`;
+      result_y.value = `Y= ${((lyamda*(point_p_x - x)-point_p_y)%mod_p + mod_p)%mod_p}`;
+
+      
+
+    })
